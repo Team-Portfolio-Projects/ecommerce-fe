@@ -1,5 +1,5 @@
 export const getUser = () => {
-	const url = 'http://localhost:3000/auth/google/callback';
+	const url = 'http://localhost:3000/auth/user';
 	fetch(url, {
 		method: 'GET',
 		headers: {
