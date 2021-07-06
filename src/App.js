@@ -23,7 +23,7 @@ function App() {
 		});
 		const data = await res.json();
 
-		localStorage.setItem(data._id, 'userId');
+		localStorage.setItem('userId', data._id);
 	};
 
 	return (
