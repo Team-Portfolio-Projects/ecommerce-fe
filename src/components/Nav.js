@@ -1,27 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as api from '../APIFile'
-const Nav: React.FC = () => {
+import * as api from '../APIFile';
+const Nav = () => {
 	return (
 		<div className='nav'>
 			<h1>
-				<Link to='/home'>Dragon Warriors</Link>
+				<Link to='/'>Dragon Warriors</Link>
 			</h1>
 			<ul className='nav-ul'>
 				<li>
-					<Link to='/home'>home</Link>
+					<Link to='/'>home</Link>
 				</li>
 				<li>
-					<Link
-						to='/cart'
-						>
-						cart
-					</Link>
+					<Link to='/cart'>cart</Link>
 				</li>
 				<li>
-					<Link
-						to='/home'
-						onClick={()=>localStorage.clear()}>
+					<Link to='/' onClick={() => localStorage.clear()}>
 						logout
 					</Link>
 				</li>
