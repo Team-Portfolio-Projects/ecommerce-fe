@@ -1,6 +1,5 @@
 export const logout = () => {
-	const url = 'http://localhost:3000/auth/logout';
-	fetch(url, {
+	fetch('http://localhost:3000/auth/logout', {
 		method: 'GET',
 		headers: {
 			'Content-type': 'application/json; charset=UTF-8',
@@ -8,8 +7,7 @@ export const logout = () => {
 	}).then((res) => res.json());
 };
 export const getProducts = () => {
-	const url = 'http://localhost:3000/api/products';
-	return fetch(url, {
+	return fetch('http://localhost:3000/api/products', {
 		method: 'GET',
 		headers: {
 			'Content-type': 'application/json; charset=UTF-8',
@@ -55,6 +53,28 @@ export const handleAdd = async (product, cart, setCart) => {
 			'Content-Type': 'application/json',
 		},
 	});
+};
 
-	setCart(cart + 1);
+export const deleteProduct = (index, id) => {
+	return fetch(`http://localhost:3000/api/cart/${id}`, {
+		method: 'PATCH',
+		body: JSON.stringify({
+			index: index,
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then((res) => res.json());
+};
+
+export const addProduct = (prod_id, id) => {
+	return fetch(`http://localhost:3000/api/cart/${id}`, {
+		method: 'PUT',
+		body: JSON.stringify({
+			prod_id: prod_id,
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then((res) => res.json());
 };
