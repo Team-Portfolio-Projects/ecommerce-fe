@@ -7,10 +7,11 @@ const Cart = () => {
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
+	let quanity = {};
 	useEffect(() => {
 		api.viewCart().then((res) => setCartItems(res));
-	}, []);
-	let quantity =
+	}, [quanity]);
+	quanity =
 		cartItems.products &&
 		cartItems.products.reduce((acc, data) => {
 			if (acc[data.title]) {
@@ -20,7 +21,7 @@ const Cart = () => {
 			}
 			return acc;
 		}, {});
-	console.log(quantity);
+	console.log(quanity);
 	// setCartItems(res[0]?.products);
 	// let total = cartItems.reduce((acc, items) => {
 	// 	return items.price + acc;
@@ -32,10 +33,12 @@ const Cart = () => {
 			<button onClick={handleClick}>Checkout</button>
 			{cartItems?.products &&
 				cartItems.products.map((prod, i) => {
+					console.log(quanity[prod.title]);
 					return (
 						<div className='cart' key={prod.id}>
 							<h2 key={prod.id}>{prod.title}</h2>
 							<h3>{prod.price}</h3>
+							<h3>{quanity[prod.title]}</h3>
 							<button
 								value={prod._id}
 								onClick={() => {
