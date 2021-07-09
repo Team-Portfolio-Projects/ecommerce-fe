@@ -7,20 +7,20 @@ const Cart = () => {
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
-	let quantity = {};
 	useEffect(() => {
 		api.viewCart().then((res) => setCartItems(res));
-		let quantity =
-			cartItems?.products &&
-			cartItems?.products.reduce((acc, data) => {
-				if (acc[data.title]) {
-					acc[data.title] += 1;
-				} else {
-					acc[data.title] = 1;
-				}
-				return acc;
-			}, {});
 	}, []);
+	let quantity =
+		cartItems.products &&
+		cartItems.products.reduce((acc, data) => {
+			if (acc[data.title]) {
+				acc[data.title] += 1;
+			} else {
+				acc[data.title] = 1;
+			}
+			return acc;
+		}, {});
+	console.log(quantity);
 	// setCartItems(res[0]?.products);
 	// let total = cartItems.reduce((acc, items) => {
 	// 	return items.price + acc;
@@ -43,7 +43,7 @@ const Cart = () => {
 										.deleteProduct(i, cartItems._id)
 										.then((res) => setCartItems(res));
 								}}>
-								X
+								-
 							</button>
 							<button
 								value={prod._id}
