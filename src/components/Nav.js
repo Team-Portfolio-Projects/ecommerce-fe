@@ -4,7 +4,7 @@ import * as api from '../APIFile';
 const Nav = () => {
 	return (
 		<div className='nav'>
-			<h1>
+			<h1 className='title'>
 				<Link to='/'>Dragon Warriors</Link>
 			</h1>
 			<ul className='nav-ul'>

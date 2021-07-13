@@ -6,6 +6,7 @@ import ProductGrid from './components/ProductGrid';
 import './index.css';
 import GoogleLogin from 'react-google-login';
 import Cart from './components/Cart';
+import LoginForm from './components/LoginForm';
 function App() {
 	const [cart, setCart] = useState(0);
 
@@ -28,14 +29,7 @@ function App() {
 
 	return (
 		<div>
-			<p>{cart}</p>
-			<GoogleLogin
-				clientId='724343472595-5p9le63sa99h2hckb905dagmr4379p6t.apps.googleusercontent.com'
-				buttonText='Log in with Google'
-				onSuccess={handleLogin}
-				onFailure={handleLogin}
-				cookiePolicy={'single_host_origin'}
-			/>
+			<LoginForm />
 			<Nav></Nav>
 			<Route path='/cart'>
 				<Cart />

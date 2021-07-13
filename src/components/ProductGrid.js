@@ -31,7 +31,7 @@ function ProductGrid({ cart, setCart }) {
 									src={product.image}
 									alt={product.title}
 								/>
-								<p>{product.price}</p>
+								<p>{`$${product.price}`}</p>
 								<p>{product.description}</p>
 								<button onClick={() => api.handleAdd(product, cart, setCart)}>
 									Add to Cart
