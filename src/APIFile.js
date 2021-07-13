@@ -1,3 +1,14 @@
+export const getGoogleClient = () => {
+	return fetch('http://localhost:3000/auth/client', {
+		method: 'GET',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+	})
+		.then((res) => res.json())
+		.then((res) => res);
+};
+
 export const logout = () => {
 	fetch('http://localhost:3000/auth/logout', {
 		method: 'GET',

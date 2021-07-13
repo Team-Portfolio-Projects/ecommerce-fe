@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import * as api from '../APIFile';
 import GoogleLogin from 'react-google-login';
 const LoginForm = () => {
+	const [googleId, setGoogleId] = useState('');
 	const handleLogin = async (googleData) => {
 		const res = await fetch('http://localhost:3000/auth/google', {
 			method: 'POST',
@@ -15,11 +17,17 @@ const LoginForm = () => {
 
 		localStorage.setItem('userId', data._id);
 	};
+
+	useEffect(() => {
+		api.getGoogleClient().then((res) => {
+			setGoogleId(res);
+		});
+	}, []);
 	return (
 		<div>
 			<div style={{ width: '100px' }}>
 				<GoogleLogin
-					clientId='724343472595-5p9le63sa99h2hckb905dagmr4379p6t.apps.googleusercontent.com'
+					clientId={`${googleId}`}
 					buttonText='Log in with Google'
 					onSuccess={handleLogin}
 					onFailure={handleLogin}

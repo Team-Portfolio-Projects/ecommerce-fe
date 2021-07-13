@@ -1,62 +1,55 @@
-import { prettyDOM } from '@testing-library/react';
 import React, { useState, useEffect } from 'react';
 import * as api from '../APIFile';
 
 const Cart = () => {
 	const [cartItems, setCartItems] = useState({});
-	const [unique, setUnique] = useState({});
+
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
-	let quanity = {};
 	useEffect(() => {
+		//On render checking for localStorage to be there and if local storage is defined get the cart relative to the user
 		localStorage.getItem('userId') &&
 			api.viewCart().then((res) => setCartItems(res));
 	}, []);
+
+	let quanity = {};
 	quanity =
 		cartItems.products &&
 		cartItems.products.reduce((acc, data) => {
 			if (acc[data.title]) {
 				acc[data.title] += 1;
-				data['quanity'] += 1;
 			} else {
-				data['quanity'] = 1;
 				acc[data.title] = 1;
 			}
 			return acc;
 		}, {});
-	console.log(quanity);
-	// const removeDuplicates = (arr) => {
-	// 	const unique = []
-
-	// };
-	console.log(quanity);
-	// const titles = Object.keys(quanity);
-	// console.log(titles);
-	// cartItems.products.forEach((prod) => {
-	// 	let arr = [];
-	// 	console.log(prod._id);
-	// 	console.log(arr.indexOf(prod._id));
-	// 	if (arr.indexOf(prod._id) === -1) {
-	// 		arr.push(prod._id);
-	// 	}
-	// 	console.log(arr);
-	// });
-	const handleDuplicates = (obj) => {
-		let unique = {};
-		for (let i = 0, len = obj.products.length; i < len; i++) {
-			// unique[obj.products['title']] = unique.title
-			// unique[obj.products['_id'] = unique
+	async function removeDuplicates() {
+		//grabbing our array of objects and turning them into JSON
+		if (!cartItems.products) {
+			return null;
 		}
-	};
+		let arrayofObjects = await cartItems.products;
+		let jsonObject = await arrayofObjects.map(JSON.stringify);
+		// creating a Set to remove duplicates from the JSON
+		let uniqueSet = new Set(jsonObject);
+		// setting the set to be mapped over
+		let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+		// returning array to use effects
+		return uniqueArray;
+	}
 
-	// handleDuplicates(cartItems);
-	// setCartItems(res[0]?.products);
-	// let total = cartItems.reduce((acc, items) => {
-	// 	return items.price + acc;
-	// }, 0);
-	// console.log(total);
-
+	removeDuplicates().then(
+		(uniqueArray) =>
+			uniqueArray &&
+			uniqueArray.map((prod) => {
+				return (
+					<h2 className='product-title' key={prod.id}>
+						{prod.title}
+					</h2>
+				);
+			})
+	);
 	return (
 		<div className='cart'>
 			<div className='products'>
