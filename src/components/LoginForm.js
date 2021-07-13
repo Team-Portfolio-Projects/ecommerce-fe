@@ -23,6 +23,9 @@ const LoginForm = () => {
 			setGoogleId(res);
 		});
 	}, []);
+	if (!googleId) {
+		return null;
+	}
 	return (
 		<div>
 			<div style={{ width: '100px' }}>

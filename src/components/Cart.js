@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as api from '../APIFile';
 
-const Cart = () => {
-	const [cartItems, setCartItems] = useState({});
-
+const Cart = ({ cartItems, setCartItems }) => {
+	const unique = useRef();
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
@@ -11,19 +10,17 @@ const Cart = () => {
 		//On render checking for localStorage to be there and if local storage is defined get the cart relative to the user
 		localStorage.getItem('userId') &&
 			api.viewCart().then((res) => setCartItems(res));
+		//removing the duplicates from our cartItems in a function created below
+
+		removeDuplicates().then(
+			(uniqueArray) => uniqueArray && (unique.current = uniqueArray)
+		);
 	}, []);
 
-	let quanity = {};
-	quanity =
-		cartItems.products &&
-		cartItems.products.reduce((acc, data) => {
-			if (acc[data.title]) {
-				acc[data.title] += 1;
-			} else {
-				acc[data.title] = 1;
-			}
-			return acc;
-		}, {});
+	if (!cartItems.products) {
+		return null;
+	}
+
 	async function removeDuplicates() {
 		//grabbing our array of objects and turning them into JSON
 		if (!cartItems.products) {
@@ -38,18 +35,17 @@ const Cart = () => {
 		// returning array to use effects
 		return uniqueArray;
 	}
+	let quanity = {};
+	//reducing out cartitems returning an object of the titles and quanities
+	quanity = cartItems.products.reduce((acc, data) => {
+		if (acc[data.title]) {
+			acc[data.title] += 1;
+		} else {
+			acc[data.title] = 1;
+		}
+		return acc;
+	}, {});
 
-	removeDuplicates().then(
-		(uniqueArray) =>
-			uniqueArray &&
-			uniqueArray.map((prod) => {
-				return (
-					<h2 className='product-title' key={prod.id}>
-						{prod.title}
-					</h2>
-				);
-			})
-	);
 	return (
 		<div className='cart'>
 			<div className='products'>
@@ -63,8 +59,48 @@ const Cart = () => {
 					Price
 				</h3>
 			</div>
-			{cartItems?.products &&
-				cartItems.products.map((prod, i) => {
+			{/* {cartItems.products.map((prod, i) => {
+				return (
+					<div className='products'>
+						<h2 className='product-title' key={prod.id}>
+							{prod.title}
+						</h2>
+						<div className='quanity-div'>
+							<h3 className='product-quanity'>{quanity[prod.title]}</h3>
+							<button
+								className='change-quanity'
+								id='subtract'
+								value={prod._id}
+								onClick={() => {
+									api
+										.deleteProduct(i, cartItems._id)
+										.then((res) => setCartItems(res));
+								}}>
+								-
+							</button>
+							<button
+								className='change-quanity'
+								id='add'
+								value={prod._id}
+								onClick={(e) => {
+									api
+										.addProduct(e.target.value, cartItems._id)
+										.then((res) => setCartItems(res));
+								}}>
+								+
+							</button>
+						</div>
+
+						<h3 className='product-price'>{`$ ${prod.price}`}</h3>
+					</div>
+				);
+			})} */}
+			<button onClick={handleClick}>Proceed to Checkout</button>
+			{unique.current &&
+				unique.current.map((prod, i) => {
+					if (!quanity[prod.title]) {
+						return null;
+					}
 					return (
 						<div className='products'>
 							<h2 className='product-title' key={prod.id}>
@@ -76,9 +112,9 @@ const Cart = () => {
 									className='change-quanity'
 									id='subtract'
 									value={prod._id}
-									onClick={() => {
+									onClick={(e) => {
 										api
-											.deleteProduct(i, cartItems._id)
+											.deleteProduct(e.target.value, cartItems._id)
 											.then((res) => setCartItems(res));
 									}}>
 									-
@@ -100,7 +136,6 @@ const Cart = () => {
 						</div>
 					);
 				})}
-			<button onClick={handleClick}>Proceed to Checkout</button>
 		</div>
 	);
 };

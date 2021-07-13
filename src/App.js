@@ -7,16 +7,16 @@ import './index.css';
 import Cart from './components/Cart';
 import LoginForm from './components/LoginForm';
 function App() {
-	const [cart, setCart] = useState(0);
+	const [cartItems, setCartItems] = useState({});
 	return (
 		<div>
 			<LoginForm />
 			<Nav></Nav>
 			<Route path='/cart'>
-				<Cart />
+				<Cart cartItems={cartItems} setCartItems={setCartItems} />
 			</Route>
 			<Route exact path='/'>
-				<ProductGrid cart={cart} setCart={setCart} />
+				<ProductGrid cartItems={cartItems} setCartItems={setCartItems} />
 			</Route>
 		</div>
 	);

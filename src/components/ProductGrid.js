@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../APIFile';
 
-function ProductGrid({ cart, setCart }) {
+function ProductGrid() {
 	const [products, setProducts] = useState();
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ function ProductGrid({ cart, setCart }) {
 								/>
 								<p>{`$${product.price}`}</p>
 								<p>{product.description}</p>
-								<button onClick={() => api.handleAdd(product, cart, setCart)}>
+								<button onClick={() => api.handleAdd(product)}>
 									Add to Cart
 								</button>
 							</div>

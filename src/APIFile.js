@@ -52,8 +52,8 @@ export const emptyCart = async () => {
 	).then((res) => res.json());
 };
 
-export const handleAdd = async (product, cart, setCart) => {
-	const res = await fetch('http://localhost:3000/api/cart', {
+export const handleAdd = async (product) => {
+	await fetch('http://localhost:3000/api/cart', {
 		method: 'POST',
 		body: JSON.stringify({
 			products: product._id,
