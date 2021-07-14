@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as api from '../APIFile';
 
 const Cart = ({ cartItems, setCartItems }) => {
@@ -6,17 +7,19 @@ const Cart = ({ cartItems, setCartItems }) => {
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
-
+	let history = useHistory();
 	useEffect(() => {
 		//On render checking for localStorage to be there and if local storage is defined get the cart relative to the user
-		localStorage.getItem('userId') &&
-			api.viewCart().then((res) => setCartItems(res));
+		localStorage.getItem('userId')
+			? api.viewCart().then((res) => setCartItems(res))
+			: history.goBack();
 		//removing the duplicates from our cartItems in a function created below
 
 		removeDuplicates().then(
 			(uniqueArray) => uniqueArray && (unique.current = uniqueArray)
 		);
 	}, []);
+
 	if (!cartItems?.products || !unique.current) {
 		return null;
 	}

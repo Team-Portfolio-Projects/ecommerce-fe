@@ -46,7 +46,7 @@ function ProductGrid() {
 									alt={product.title}
 								/>
 								<p>{`$${product.price}`}</p>
-								<p>{product.description}</p>
+								<p className='product-description'>{product.description}</p>
 								<button onClick={() => api.handleAdd(product)}>
 									Add to Cart
 								</button>
