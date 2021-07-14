@@ -89,3 +89,25 @@ export const addProduct = (prod_id, id) => {
 		},
 	}).then((res) => res.json());
 };
+
+export const getCategory = (category) => {
+	return fetch(`http://localhost:3000/api/products/${category}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then((res) => res.json());
+};
+export const postSignUp = (user, setError) => {
+	const url = `http://localhost:3000/auth/signup`;
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+		body: JSON.stringify(user),
+	})
+		.then((res) => res.json())
+		.then((data) => console.log(data))
+		.catch(() => setError(true));
+};

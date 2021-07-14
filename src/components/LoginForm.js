@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../APIFile';
 import GoogleLogin from 'react-google-login';
-const LoginForm = () => {
+const LoginForm = ({ user, setUser }) => {
 	const [googleId, setGoogleId] = useState('');
 	const handleLogin = async (googleData) => {
 		const res = await fetch('http://localhost:3000/auth/google', {
@@ -14,7 +14,7 @@ const LoginForm = () => {
 			},
 		});
 		const data = await res.json();
-
+		setUser(data);
 		localStorage.setItem('userId', data._id);
 	};
 
@@ -27,8 +27,8 @@ const LoginForm = () => {
 		return null;
 	}
 	return (
-		<div>
-			<div style={{ width: '100px' }}>
+		<div className='login-grid'>
+			<div className='google'>
 				<GoogleLogin
 					clientId={`${googleId}`}
 					buttonText='Log in with Google'
@@ -37,6 +37,18 @@ const LoginForm = () => {
 					cookiePolicy={'single_host_origin'}
 				/>
 			</div>
+			<p className='basic-user'>User: basictester5363@gmail.com </p>
+			<p className='basic-pass'>Password: TestMyCode!</p>
+			{user && (
+				<div className='google-data'>
+					<img
+						className='google-img'
+						alt='users google account'
+						src={user.googlePicture}
+					/>
+					<p className='welcome'>Welcome {user.displayName}!</p>
+				</div>
+			)}
 		</div>
 	);
 };

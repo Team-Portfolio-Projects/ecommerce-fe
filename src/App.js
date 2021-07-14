@@ -6,12 +6,14 @@ import ProductGrid from './components/ProductGrid';
 import './index.css';
 import Cart from './components/Cart';
 import LoginForm from './components/LoginForm';
+
 function App() {
 	const [cartItems, setCartItems] = useState({});
+	const [user, setUser] = useState(null);
 	return (
 		<div>
-			<LoginForm />
-			<Nav></Nav>
+			<LoginForm user={user} setUser={setUser} />
+			<Nav user={user} setUser={setUser}></Nav>
 			<Route path='/cart'>
 				<Cart cartItems={cartItems} setCartItems={setCartItems} />
 			</Route>

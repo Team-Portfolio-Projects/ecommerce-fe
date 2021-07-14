@@ -1,9 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: 'Montserrat', sans-serif;
+}
 .nav {
+	background-color: #1b4332;
 	display: grid;
 	grid-template-columns: 2fr 2fr 2fr;
 }
 .nav-ul {
 	grid-column: 3;
+	text-decoration: none;
+}
+.nav li {
+	list-style: none;
+}
+.nav a {
+	color: #adb5bd;
 	text-decoration: none;
 }
 .cart {
@@ -12,34 +27,31 @@
 	grid-template-rows: 3fr, 1fr, 3fr;
 }
 .products {
-	background: white;
+	background-color: rgb(101, 102, 101);
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	display: grid;
 	grid-template-columns: 4fr 2fr 2fr;
-
 	grid-gap: 1px solid rgba(0, 0, 0, 0.3);
 }
 .product-title {
+	color: black;
 	font-size: smaller;
-	color: rgba(0, 0, 0, 0.3);
 }
 .header {
 	text-decoration: underline rgba(0, 0, 0, 0.3);
 }
+.title {
+	font-family: 'Montserrat', sans-serif;
+}
 .product-price {
-	color: green;
+	color: rgb(9, 38, 9);
 }
 .change-quanity {
 	position: relative;
 	text-align: center;
 	grid-column: 2;
 }
-.nav li {
-	list-style: none;
-}
-.nav a {
-	text-decoration: none;
-}
+
 .product {
 	position: relative;
 	text-align: center;
@@ -49,7 +61,35 @@
 	padding: 5px;
 }
 .product-grid {
+	background-color: rgb(101, 102, 101);
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	grid-gap: 10px;
+}
+form {
+	background-color: #40916c;
+}
+.login-grid {
+	background-color: #081c15;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	color: #767f87;
+}
+.basic-user {
+}
+.google-data {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+.google-img {
+	margin-left: 60px;
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+}
+.welcome {
+	margin: 0;
+}
+.react-icons {
 }

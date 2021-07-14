@@ -6,7 +6,7 @@ const Cart = ({ cartItems, setCartItems }) => {
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
-	let quan = 0;
+
 	useEffect(() => {
 		//On render checking for localStorage to be there and if local storage is defined get the cart relative to the user
 		localStorage.getItem('userId') &&
@@ -16,7 +16,7 @@ const Cart = ({ cartItems, setCartItems }) => {
 		removeDuplicates().then(
 			(uniqueArray) => uniqueArray && (unique.current = uniqueArray)
 		);
-	}, [quan]);
+	}, []);
 	if (!cartItems?.products || !unique.current) {
 		return null;
 	}
