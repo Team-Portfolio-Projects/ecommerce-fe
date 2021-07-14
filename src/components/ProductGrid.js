@@ -13,21 +13,14 @@ function ProductGrid() {
 
 	return (
 		<div>
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-					gridGap: '10px',
-				}}>
+			<div className='product-grid'>
 				{products &&
 					products.map((product) => {
 						return (
-							<div
-								key={product._id}
-								style={{ border: '2px solid black', padding: '5px' }}>
+							<div className='card' key={product._id}>
 								<p>{product.title}</p>
 								<img
-									style={{ width: '50px' }}
+									style={{ width: '150px' }}
 									src={product.image}
 									alt={product.title}
 								/>
