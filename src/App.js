@@ -6,7 +6,7 @@ import ProductGrid from './components/ProductGrid';
 import './index.css';
 import Cart from './components/Cart';
 import LoginForm from './components/LoginForm';
-
+import Checkout from './components/Checkout';
 function App() {
 	const [cartItems, setCartItems] = useState({});
 	const [user, setUser] = useState(null);
@@ -19,6 +19,9 @@ function App() {
 			</Route>
 			<Route exact path='/'>
 				<ProductGrid cartItems={cartItems} setCartItems={setCartItems} />
+			</Route>
+			<Route exact path='/checkout'>
+				<Checkout cartItems={cartItems} setCartItems={setCartItems} />
 			</Route>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as api from '../APIFile';
@@ -5,7 +6,8 @@ import * as api from '../APIFile';
 const Cart = ({ cartItems, setCartItems }) => {
 	const unique = useRef();
 	const handleClick = () => {
-		api.emptyCart().then((res) => setCartItems(res));
+		api.checkoutCart().then((res) => setCartItems(res));
+		history.push('/checkout');
 	};
 	let history = useHistory();
 	useEffect(() => {
@@ -20,13 +22,9 @@ const Cart = ({ cartItems, setCartItems }) => {
 		);
 	}, []);
 
-	if (!cartItems?.products || !unique.current) {
-		return null;
+	while (!cartItems?.products || !unique.current) {
+		return <p>Loading...</p>;
 	}
-	const getTotal = (total, quanity) => {
-		let sum = total * quanity;
-		return sum;
-	};
 	async function removeDuplicates() {
 		//grabbing our array of objects and turning them into JSON
 		if (!cartItems?.products) {
@@ -102,7 +100,9 @@ const Cart = ({ cartItems, setCartItems }) => {
 								</button>
 							</div>
 
-							<h3 className='product-price'>{`$ ${prod.price}`}</h3>
+							<h3 className='product-price'>{`$ ${
+								quanity[prod.title] * prod.price
+							}`}</h3>
 						</div>
 					);
 				})}

@@ -52,7 +52,7 @@ function ProductGrid() {
 								<p className='product-description'>{product.description}</p>
 								<IconButton color='primary' aria-label='add to shopping cart'>
 									<AddShoppingCartIcon
-										style={{ fill: 'grey', size: 'larger' }}
+										style={{ fill: 'darkgrey', size: 'larger' }}
 										onClick={() => api.handleAdd(product)}
 									/>
 								</IconButton>
