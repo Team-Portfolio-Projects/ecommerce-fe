@@ -1,41 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../APIFile';
 
-function ProductGrid({ cart, setCart }) {
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+function ProductGrid() {
 	const [products, setProducts] = useState();
-
+	const [category, setCategory] = useState('');
 	useEffect(() => {
 		api.getProducts().then((res) => {
-			console.log(res);
 			setProducts(res);
 		});
 	}, []);
-
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (category === 'everything') {
+			api.getProducts().then((res) => setProducts(res));
+		} else {
+			api.getCategory(category).then((res) => setProducts(res));
+		}
+	};
 	return (
 		<div>
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-					gridGap: '10px',
-				}}>
+			<form onSubmit={handleSubmit}>
+				<label>
+					What are you looking for?
+					<select
+						value={category}
+						onChange={(e) => setCategory(e.target.value)}>
+						<option value={'everything'}>Everything!</option>
+						<option value={"women's clothing"}>Womens Clothing</option>
+						<option value={'electronics'}>Electronics</option>
+						<option value={'jewelery'}>Jewelery</option>
+						<option value={"men's clothing"}>Men's Clothing</option>
+					</select>
+				</label>
+				<input type='submit' value='Go' />
+			</form>
+
+			<div className='product-grid'>
 				{products &&
 					products.map((product) => {
 						return (
-							<div
-								key={product._id}
-								style={{ border: '2px solid black', padding: '5px' }}>
+							<div className='card' key={product._id}>
 								<p>{product.title}</p>
 								<img
-									style={{ width: '50px' }}
+									className='product-img'
 									src={product.image}
 									alt={product.title}
 								/>
-								<p>{product.price}</p>
-								<p>{product.description}</p>
-								<button onClick={() => api.handleAdd(product, cart, setCart)}>
-									Add to Cart
-								</button>
+								<p>{`$${product.price}`}</p>
+								<p className='product-description'>{product.description}</p>
+								<IconButton color='primary' aria-label='add to shopping cart'>
+									<AddShoppingCartIcon
+										style={{ fill: 'grey', size: 'larger' }}
+										onClick={() => api.handleAdd(product)}
+									/>
+								</IconButton>
 							</div>
 						);
 					})}

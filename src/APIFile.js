@@ -1,3 +1,14 @@
+export const getGoogleClient = () => {
+	return fetch('http://localhost:3000/auth/client', {
+		method: 'GET',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+	})
+		.then((res) => res.json())
+		.then((res) => res);
+};
+
 export const logout = () => {
 	fetch('http://localhost:3000/auth/logout', {
 		method: 'GET',
@@ -41,8 +52,8 @@ export const emptyCart = async () => {
 	).then((res) => res.json());
 };
 
-export const handleAdd = async (product, cart, setCart) => {
-	const res = await fetch('http://localhost:3000/api/cart', {
+export const handleAdd = async (product) => {
+	await fetch('http://localhost:3000/api/cart', {
 		method: 'POST',
 		body: JSON.stringify({
 			products: product._id,
@@ -77,4 +88,26 @@ export const addProduct = (prod_id, id) => {
 			'Content-Type': 'application/json',
 		},
 	}).then((res) => res.json());
+};
+
+export const getCategory = (category) => {
+	return fetch(`http://localhost:3000/api/products/${category}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then((res) => res.json());
+};
+export const postSignUp = (user, setError) => {
+	const url = `http://localhost:3000/auth/signup`;
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+		body: JSON.stringify(user),
+	})
+		.then((res) => res.json())
+		.then((data) => console.log(data))
+		.catch(() => setError(true));
 };

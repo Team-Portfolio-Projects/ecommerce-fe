@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as api from '../APIFile';
-const Nav = () => {
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
+const Nav = ({ setUser }) => {
+	const handleLogout = () => {
+		localStorage.clear();
+		setUser(null);
+	};
 	return (
 		<div className='nav'>
-			<h1>
-				<Link to='/'>Dragon Warriors</Link>
+			<h1 className='title'>
+				<Link to='/'>E-commerce</Link>
 			</h1>
 			<ul className='nav-ul'>
-				<li>
-					<Link to='/'>home</Link>
+				<li style={{ height: '25px' }}>
+					<Link to='/cart'>
+						<ShoppingCartIcon />
+					</Link>
 				</li>
 				<li>
-					<Link to='/cart'>cart</Link>
-				</li>
-				<li>
-					<Link to='/' onClick={() => localStorage.clear()}>
+					<Link to='/' onClick={handleLogout}>
 						logout
 					</Link>
 				</li>

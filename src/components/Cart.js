@@ -1,59 +1,108 @@
-import { prettyDOM } from '@testing-library/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as api from '../APIFile';
 
-const Cart = () => {
-	const [cartItems, setCartItems] = useState({});
+const Cart = ({ cartItems, setCartItems }) => {
+	const unique = useRef();
 	const handleClick = () => {
 		api.emptyCart().then((res) => setCartItems(res));
 	};
-	let quantity = {};
+	let history = useHistory();
 	useEffect(() => {
-		api.viewCart().then((res) => setCartItems(res));
-		let quantity =
-			cartItems?.products &&
-			cartItems?.products.reduce((acc, data) => {
-				if (acc[data.title]) {
-					acc[data.title] += 1;
-				} else {
-					acc[data.title] = 1;
-				}
-				return acc;
-			}, {});
+		//On render checking for localStorage to be there and if local storage is defined get the cart relative to the user
+		localStorage.getItem('userId')
+			? api.viewCart().then((res) => setCartItems(res))
+			: history.goBack();
+		//removing the duplicates from our cartItems in a function created below
+
+		removeDuplicates().then(
+			(uniqueArray) => uniqueArray && (unique.current = uniqueArray)
+		);
 	}, []);
-	// setCartItems(res[0]?.products);
-	// let total = cartItems.reduce((acc, items) => {
-	// 	return items.price + acc;
-	// }, 0);
-	// console.log(total);
+
+	if (!cartItems?.products || !unique.current) {
+		return null;
+	}
+	const getTotal = (total, quanity) => {
+		let sum = total * quanity;
+		return sum;
+	};
+	async function removeDuplicates() {
+		//grabbing our array of objects and turning them into JSON
+		if (!cartItems?.products) {
+			return null;
+		}
+		let arrayofObjects = await cartItems.products;
+		let jsonObject = await arrayofObjects.map(JSON.stringify);
+		// creating a Set to remove duplicates from the JSON
+		let uniqueSet = new Set(jsonObject);
+		// setting the set to be mapped over
+		let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+		// returning array to use effects
+		return uniqueArray;
+	}
+	let quanity = {};
+	//reducing out cartitems returning an object of the titles and quanities
+	quanity = cartItems.products.reduce((acc, data) => {
+		if (acc[data.title]) {
+			acc[data.title] += 1;
+		} else {
+			acc[data.title] = 1;
+		}
+		return acc;
+	}, {});
 
 	return (
-		<div>
-			<button onClick={handleClick}>Checkout</button>
-			{cartItems?.products &&
-				cartItems.products.map((prod, i) => {
+		<div className='cart'>
+			<div className='products'>
+				<h2 className='header' id='product'>
+					Product
+				</h2>
+				<h3 className='header' id='quanity'>
+					Quanity
+				</h3>
+				<h3 className='header' id='price'>
+					Price
+				</h3>
+			</div>
+			<button onClick={handleClick}>Proceed to Checkout</button>
+			{unique.current &&
+				unique.current.map((prod, i) => {
+					if (!quanity[prod.title]) {
+						return null;
+					}
 					return (
-						<div className='cart' key={prod.id}>
-							<h2 key={prod.id}>{prod.title}</h2>
-							<h3>{prod.price}</h3>
-							<button
-								value={prod._id}
-								onClick={() => {
-									api
-										.deleteProduct(i, cartItems._id)
-										.then((res) => setCartItems(res));
-								}}>
-								X
-							</button>
-							<button
-								value={prod._id}
-								onClick={(e) => {
-									api
-										.addProduct(e.target.value, cartItems._id)
-										.then((res) => setCartItems(res));
-								}}>
-								+
-							</button>
+						<div className='products'>
+							<h2 className='product-title' key={prod.id}>
+								{prod.title}
+							</h2>
+							<div className='quanity-div'>
+								<h3 className='product-quanity'>{quanity[prod.title]}</h3>
+								<button
+									className='change-quanity'
+									id='subtract'
+									value={prod._id}
+									onClick={(e) => {
+										api
+											.deleteProduct(e.target.value, cartItems._id)
+											.then((res) => setCartItems(res));
+									}}>
+									-
+								</button>
+								<button
+									className='change-quanity'
+									id='add'
+									value={prod._id}
+									onClick={(e) => {
+										api
+											.addProduct(e.target.value, cartItems._id)
+											.then((res) => setCartItems(res));
+									}}>
+									+
+								</button>
+							</div>
+
+							<h3 className='product-price'>{`$ ${prod.price}`}</h3>
 						</div>
 					);
 				})}
