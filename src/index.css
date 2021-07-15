@@ -58,7 +58,7 @@ body {
 }
 .card {
 	max-height: 500px;
-	background-color: cadetblue;
+	background-color: rgba(91, 223, 39, 0.077);
 	border: 2px solid black;
 	padding: 5px;
 	transition: transform 500ms ease;
@@ -72,6 +72,16 @@ body {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	grid-gap: 10px;
+}
+.product-description {
+	height: 40px;
+	text-overflow: ellipsis;
+	white-space: wrap;
+	overflow: hidden;
+}
+.product-img {
+	max-width: 150px;
+	max-height: 200px;
 }
 form {
 	background-color: #40916c;
@@ -99,11 +109,26 @@ form {
 .welcome {
 	margin: 0;
 }
-.product-description {
-	height: 40px;
-	text-overflow: ellipsis;
-	white-space: wrap;
-	overflow: hidden;
+
+select {
+	box-shadow: 0 10px 25px rgba(0, 2, 1, 0.3);
+	color: white;
+	background: rgba(1, 58, 27, 0.57);
+}
+.custom-select {
+	position: relative;
+}
+.custom-arrow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	background: saddlebrown;
+	width: 1rem;
+	height: 1rem;
+}
+select option {
+	background-color: black;
 }
 @media only screen and (min-width: 500px) {
 }

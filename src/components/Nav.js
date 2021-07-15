@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as api from '../APIFile';
-import { TiShoppingCart } from 'react-icons/ti';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
 const Nav = ({ setUser }) => {
 	const handleLogout = () => {
 		localStorage.clear();
@@ -15,7 +15,7 @@ const Nav = ({ setUser }) => {
 			<ul className='nav-ul'>
 				<li style={{ height: '25px' }}>
 					<Link to='/cart'>
-						<TiShoppingCart />
+						<ShoppingCartIcon />
 					</Link>
 				</li>
 				<li>

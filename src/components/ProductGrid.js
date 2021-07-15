@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../APIFile';
 
+import IconButton from '@material-ui/core/IconButton';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 function ProductGrid() {
 	const [products, setProducts] = useState();
 	const [category, setCategory] = useState('');
@@ -34,6 +36,7 @@ function ProductGrid() {
 				</label>
 				<input type='submit' value='Go' />
 			</form>
+
 			<div className='product-grid'>
 				{products &&
 					products.map((product) => {
@@ -41,15 +44,18 @@ function ProductGrid() {
 							<div className='card' key={product._id}>
 								<p>{product.title}</p>
 								<img
-									style={{ width: '150px' }}
+									className='product-img'
 									src={product.image}
 									alt={product.title}
 								/>
 								<p>{`$${product.price}`}</p>
 								<p className='product-description'>{product.description}</p>
-								<button onClick={() => api.handleAdd(product)}>
-									Add to Cart
-								</button>
+								<IconButton color='primary' aria-label='add to shopping cart'>
+									<AddShoppingCartIcon
+										style={{ fill: 'grey', size: 'larger' }}
+										onClick={() => api.handleAdd(product)}
+									/>
+								</IconButton>
 							</div>
 						);
 					})}
