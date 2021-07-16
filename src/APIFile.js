@@ -41,7 +41,7 @@ export const viewCart = () => {
 };
 
 export const checkoutCart = async () => {
-	return fetch(
+	fetch(
 		`http://localhost:3000/api/cart/checkout/${localStorage.getItem('userId')}`,
 		{
 			method: 'POST',

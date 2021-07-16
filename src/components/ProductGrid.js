@@ -50,10 +50,12 @@ function ProductGrid() {
 								/>
 								<p>{`$${product.price}`}</p>
 								<p className='product-description'>{product.description}</p>
-								<IconButton color='primary' aria-label='add to shopping cart'>
+								<IconButton
+									color='primary'
+									aria-label='add to shopping cart'
+									onClick={() => api.handleAdd(product)}>
 									<AddShoppingCartIcon
 										style={{ fill: 'darkgrey', size: 'larger' }}
-										onClick={() => api.handleAdd(product)}
 									/>
 								</IconButton>
 							</div>

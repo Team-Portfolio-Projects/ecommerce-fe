@@ -100,9 +100,9 @@ const Cart = ({ cartItems, setCartItems }) => {
 								</button>
 							</div>
 
-							<h3 className='product-price'>{`$ ${
+							<h3 className='product-price'>{`$ ${(
 								quanity[prod.title] * prod.price
-							}`}</h3>
+							).toFixed(2)}`}</h3>
 						</div>
 					);
 				})}

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-
+import * as api from '../APIFile';
 const Checkout = ({ cartItems, setCartItems }) => {
-	useEffect(() => {}, []);
+	useEffect(() => {
+		api.viewCart().then((res) => setCartItems(res));
+	}, []);
 	let total = 0;
+	while (!cartItems?.purchased.length) {
+		return <h1>You have not made any purchases with us</h1>;
+	}
 	cartItems?.purchased.forEach((prod) => {
 		total += prod.total;
 	});
-	while (!cartItems.purchased.length) {
-		return <h1>You have not made any purchases with us</h1>;
-	}
 	return (
 		<div>
 			<h1>Thank you for shopping with us today!</h1>
@@ -16,7 +18,7 @@ const Checkout = ({ cartItems, setCartItems }) => {
 			<h2>Previous Purchases</h2>
 			<div>
 				{cartItems.purchased.map((purch) => {
-					purch.products.map((prod) => console.log(prod));
+					purch.product.map((prod) => console.log(prod));
 				})}
 			</div>
 		</div>
