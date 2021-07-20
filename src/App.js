@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Route } from 'react-router-dom';
 import Nav from './components/Nav';
 import ProductGrid from './components/ProductGrid';

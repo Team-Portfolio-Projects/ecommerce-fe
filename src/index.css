@@ -58,7 +58,8 @@ body {
 }
 .card {
 	max-height: 500px;
-	background-color: rgba(91, 223, 39, 0.077);
+	/* background-color: rgba(91, 223, 39, 0.077); */
+	background-color: white;
 	border: 2px solid black;
 	padding: 5px;
 	transition: transform 500ms ease;
@@ -94,8 +95,7 @@ form {
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	color: #767f87;
 }
-.basic-user {
-}
+
 .google-data {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
