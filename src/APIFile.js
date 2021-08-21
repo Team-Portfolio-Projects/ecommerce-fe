@@ -40,11 +40,11 @@ export const viewCart = () => {
 	).then((res) => res.json());
 };
 
-export const emptyCart = async () => {
-	return fetch(
-		`http://localhost:3000/api/cart/${localStorage.getItem('userId')}`,
+export const checkoutCart = async () => {
+	fetch(
+		`http://localhost:3000/api/cart/checkout/${localStorage.getItem('userId')}`,
 		{
-			method: 'DELETE',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},

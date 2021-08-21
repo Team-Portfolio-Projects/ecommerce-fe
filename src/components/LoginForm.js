@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../APIFile';
 import GoogleLogin from 'react-google-login';
+import { Link } from 'react-router-dom';
 const LoginForm = ({ user, setUser }) => {
 	const [googleId, setGoogleId] = useState('');
 	const handleLogin = async (googleData) => {
@@ -41,11 +42,13 @@ const LoginForm = ({ user, setUser }) => {
 			<p className='basic-pass'>Password: TestMyCode!</p>
 			{user && (
 				<div className='google-data'>
-					<img
-						className='google-img'
-						alt='users google account'
-						src={user.googlePicture}
-					/>
+					<Link to='google.com'>
+						<img
+							className='google-img'
+							alt='users google account'
+							src={user.googlePicture}
+						/>
+					</Link>
 					<p className='welcome'>Welcome {user.displayName}!</p>
 				</div>
 			)}
