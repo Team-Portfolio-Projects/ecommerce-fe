@@ -59,7 +59,6 @@ const Cart = ({ cartItems, setCartItems }) => {
 			return uniqueArray;
 		}
 	}
-	console.log(unique.current);
 
 	return loading ? (
 		<p>loading</p>
@@ -79,12 +78,12 @@ const Cart = ({ cartItems, setCartItems }) => {
 			<button onClick={handleClick}>Proceed to Checkout</button>
 			{unique.current &&
 				unique.current.map((prod, i) => {
-					// if (!quanity[prod.title]) {
-					// 	return null;
-					// }
+					if (!quanity[prod.title]) {
+						return null;
+					}
 					return (
 						<div className='products' key={prod._id}>
-							<h2 className='product-title' key={prod._id}>
+							<h2 className='product-title' key={prod.title}>
 								{prod.title}
 							</h2>
 							<div className='quanity-div' key={prod._id}>

@@ -4,13 +4,11 @@ const Checkout = ({ cartItems, setCartItems }) => {
 	useEffect(() => {
 		api.viewCart().then((res) => setCartItems(res));
 	}, []);
-	let total = 0;
-	while (!cartItems?.purchased.length) {
+
+	while (!cartItems?.purchased?.length) {
 		return <h1>You have not made any purchases with us</h1>;
 	}
-	cartItems?.purchased.forEach((prod) => {
-		total += prod.total;
-	});
+
 	return (
 		<div>
 			<h1>Thank you for shopping with us today!</h1>
@@ -18,7 +16,22 @@ const Checkout = ({ cartItems, setCartItems }) => {
 			<h2>Previous Purchases</h2>
 			<div>
 				{cartItems.purchased.map((purch) => {
-					purch.product.map((prod) => console.log(prod));
+					if (purch.product.length === 0) {
+						return null;
+					}
+					return (
+						<div className='purchased-div'>
+							<p className='purchased-date'>Purchased on : {purch.date}</p>
+							{purch?.product?.map((prod) => {
+								return (
+									<div className='map-div'>
+										<h2 className='purchased-title'>{prod.title}</h2>
+										<h3 className='purchased-price'>$ {prod.price}</h3>
+									</div>
+								);
+							})}
+						</div>
+					);
 				})}
 			</div>
 		</div>
