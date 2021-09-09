@@ -37,7 +37,9 @@ function ProductGrid() {
 						<option value={"men's clothing"}>Men's Clothing</option>
 					</select>
 				</label>
-				<input type='submit' value='Go' />
+				<button type='submit' className='submit-button'>
+					GO
+				</button>
 			</form>
 
 			<div className='product-grid'>

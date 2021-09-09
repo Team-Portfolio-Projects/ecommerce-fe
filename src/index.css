@@ -127,13 +127,22 @@ select {
 	width: 1rem;
 	height: 1rem;
 }
-select option {
-	background-color: black;
+select {
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 5%;
+	height: 35px;
+	color: green;
+}
+button {
+	height: 55px;
 }
 .purchased-div {
-	border: 5px solid black;
+	border-top: 1px solid rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
 }
 .map-div {
+	border-top: 1px solid grey;
 	display: grid;
 	grid-template-columns: 4fr 2fr;
 }
@@ -142,6 +151,12 @@ select option {
 	font-weight: 1000;
 	color: rgb(0, 124, 0);
 	grid-column: 4;
+}
+.purchased-date {
+	background-color: rgb(216, 215, 191);
+}
+.submit-button {
+	height: 35px;
 }
 @media only screen and (min-width: 500px) {
 }
