@@ -17,7 +17,6 @@ As a user, I would like to be able to search for products(GOLD)
 As a user, I would like to see ratings and reviews for products(BRONZE)
 
 
-The original plan for purchases is to have a fake purchase. Implementing Paypal or stripe would be a GOLD feature
 
 Please see intended models below:
 
